@@ -1,9 +1,9 @@
 <?php
 
-namespace Prezent\PushwooshBundle\Manager;
+namespace Prezent\PushBundle\Manager;
 
 /**
- * Prezent\PushwooshBundle\Manager\ManagerInterface
+ * Prezent\PushBundle\Manager\ManagerInterface
  *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */

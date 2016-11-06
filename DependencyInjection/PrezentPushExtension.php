@@ -1,6 +1,6 @@
 <?php
 
-namespace Prezent\PushwooshBundle\DependencyInjection;
+namespace Prezent\PushBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Loader;
  * @see Extension
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */
-class PrezentPushwooshExtension extends Extension
+class PrezentPushExtension extends Extension
 {
     /**
      * {@inheritdoc}

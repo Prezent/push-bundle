@@ -1,16 +1,16 @@
 <?php
 
-namespace Prezent\PushwooshBundle\Manager;
+namespace Prezent\PushBundle\Manager;
 
 use Gomoob\Pushwoosh\IPushwoosh;
 use Gomoob\Pushwoosh\Model\Notification\Notification;
 use Gomoob\Pushwoosh\Model\Request\CreateMessageRequest;
-use Prezent\PushwooshBundle\Exception\LoggingException;
-use Prezent\PushwooshBundle\Log\LoggingTrait;
+use Prezent\PushBundle\Exception\LoggingException;
+use Prezent\PushBundle\Log\LoggingTrait;
 use Psr\Log\LoggerInterface;
 
 /**
- * Prezent\PushwooshBundle\PushNotification\Manager
+ * Prezent\PushBundle\PushNotification\Manager
  *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */

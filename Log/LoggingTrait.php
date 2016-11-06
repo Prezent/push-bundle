@@ -1,11 +1,11 @@
 <?php
 
-namespace Prezent\PushwooshBundle\Log;
+namespace Prezent\PushBundle\Log;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Gomoob\Pushwoosh\Model\Notification\Notification;
-use Prezent\PushwooshBundle\Entity\LogEntry;
+use Prezent\PushBundle\Entity\LogEntry;
 use Psr\Log\LoggerInterface;
 
 /**

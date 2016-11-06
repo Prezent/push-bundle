@@ -1,8 +1,8 @@
 <?php
 
-namespace Prezent\PushwooshBundle\Command;
+namespace Prezent\PushBundle\Command;
 
-use Prezent\PushwooshBundle\Manager\ManagerInterface;
+use Prezent\PushBundle\Manager\ManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Prezent\PushwooshBundle\Command\SendPushNotificationCommand
+ * Prezent\PushBundle\Command\SendPushNotificationCommand
  *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */

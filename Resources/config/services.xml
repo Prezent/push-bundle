@@ -30,7 +30,7 @@
             </call>
         </service>
 
-        <service id="prezent_push.pushwoosh_manager" class="Prezent\PushwooshBundle\Manager\PushwooshManager">
+        <service id="prezent_push.pushwoosh_manager" class="Prezent\PushBundle\Manager\PushwooshManager">
             <argument type="service" id="pushwoosh"/>
             <argument>%prezent_push.logging%</argument>
         </service>
@@ -59,7 +59,7 @@
              <argument type="service" id="onesignal_guzzle_http_client"/>
          </service>
 
-         <service id="prezent_push.onesignal_manager" class="Prezent\PushwooshBundle\Manager\OneSignalManager">
+         <service id="prezent_push.onesignal_manager" class="Prezent\PushBundle\Manager\OneSignalManager">
              <argument type="service" id="onesignal"/>
              <argument>%prezent_push.logging%</argument>
          </service>

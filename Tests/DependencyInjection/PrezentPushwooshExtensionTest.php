@@ -1,14 +1,14 @@
 <?php
 
-namespace Prezent\PushwooshBundle\Tests\DependencyInjection;
+namespace Prezent\PushBundle\Tests\DependencyInjection;
 
-use Prezent\PushwooshBundle\DependencyInjection\PrezentPushwooshExtension;
+use Prezent\PushBundle\DependencyInjection\PrezentPushExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class PrezentPushwooshExtensionTest extends \PHPUnit_Framework_TestCase
+class PrezentPushExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var PrezentPushwooshExtension
+     * @var PrezentPushExtension
      */
     private $extension;
 
@@ -22,7 +22,7 @@ class PrezentPushwooshExtensionTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->extension = new PrezentPushwooshExtension();
+        $this->extension = new PrezentPushExtension();
         $this->container = new ContainerBuilder();
     }
 

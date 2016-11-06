@@ -1,6 +1,6 @@
 <?php
 
-namespace Prezent\PushwooshBundle\DependencyInjection;
+namespace Prezent\PushBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
