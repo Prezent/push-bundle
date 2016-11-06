@@ -1,6 +1,6 @@
 <?php
 
-namespace Prezent\PushwooshBundle\DependencyInjection;
+namespace Prezent\PushBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -19,14 +19,27 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('prezent_pushwoosh');
+        $rootNode = $treeBuilder->root('prezent_push');
 
         $rootNode
             ->children()
-                ->scalarNode('api_key')->isRequired()->end()
-                ->scalarNode('application_id')->end()
-                ->scalarNode('application_group_id')->end()
-                ->scalarNode('client_class')->end()
+                ->scalarNode('provider')->isRequired()->end()
+                ->arrayNode('pushwoosh')
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('api_key')->isRequired()->end()
+                        ->scalarNode('application_id')->end()
+                        ->scalarNode('application_group_id')->end()
+                        ->scalarNode('client_class')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('onesignal')
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('application_id')->isRequired()->end()
+                        ->scalarNode('application_auth_key')->isRequired()->end()
+                    ->end()
+                ->end()
                 ->arrayNode('logging')
                     ->canBeEnabled()
                     ->children()

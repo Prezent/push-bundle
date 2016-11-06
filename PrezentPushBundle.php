@@ -1,6 +1,6 @@
 <?php
 
-namespace Prezent\PushwooshBundle;
+namespace Prezent\PushBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -10,6 +10,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * @see Bundle
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */
-class PrezentPushwooshBundle extends Bundle
+class PrezentPushBundle extends Bundle
 {
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Prezent\PushwooshBundle\Manager;
+namespace Prezent\PushBundle\Manager;
 
 /**
- * Prezent\PushwooshBundle\Manager\ManagerInterface
+ * Prezent\PushBundle\Manager\ManagerInterface
  *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */
@@ -30,4 +30,14 @@ interface ManagerInterface
      * @return bool
      */
     public function sendBatch(array $notifications);
+
+    /**
+     * @return int
+     */
+    public function getErrorCode();
+
+    /**
+     * @return string
+     */
+    public function getErrorMessage();
 }

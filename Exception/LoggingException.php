@@ -1,9 +1,9 @@
 <?php
 
-namespace Prezent\PushwooshBundle\Exception;
+namespace Prezent\PushBundle\Exception;
 
 /**
- * Prezent\PushwooshBundle\Exception\LoggingException
+ * Prezent\PushBundle\Exception\LoggingException
  *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */

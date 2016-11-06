@@ -1,12 +1,12 @@
 <?php
 
-namespace Prezent\PushwooshBundle\Entity;
+namespace Prezent\PushBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gomoob\Pushwoosh\Model\Notification\Platform;
 
 /**
- * Prezent\PushwooshBundle\Entity\PushReceiver
+ * Prezent\PushBundle\Entity\PushReceiver
  *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
 

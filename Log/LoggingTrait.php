@@ -1,15 +1,15 @@
 <?php
 
-namespace Prezent\PushwooshBundle\Log;
+namespace Prezent\PushBundle\Log;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Gomoob\Pushwoosh\Model\Notification\Notification;
-use Prezent\PushwooshBundle\Entity\LogEntry;
+use Prezent\PushBundle\Entity\LogEntry;
 use Psr\Log\LoggerInterface;
 
 /**
- * Trait containing functions to log API requests
+ * Trait containing functions to log push notificationsz
  *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */
@@ -17,19 +17,13 @@ trait LoggingTrait
 {
     /**
      * @param LoggerInterface $logger
-     * @param Notification $notification
+     * @param array $data
      * @param bool $success
      * @param array $context
      * @return bool
      */
-    public function logToFile(LoggerInterface $logger, Notification $notification, $success = true, array $context = [])
+    public function logToFile(LoggerInterface $logger, array $data, $success = true, array $context = [])
     {
-        $data = [
-            'receivers' => $notification->getDevices(),
-            'content' => $notification->getContent(),
-            'data' => $notification->getData(),
-        ];
-
         $data = array_merge($data, $context);
 
         if ($success) {
