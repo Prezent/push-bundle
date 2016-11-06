@@ -25,45 +25,95 @@ class PrezentPushwooshExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        // check if the application ID, or the application group ID is set
-        if (!isset($config['application_id']) && !isset($config['application_group_id'])) {
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.xml');
+
+        switch ($config['provider']) {
+            case 'onesignal':
+                $this->configureOneSignal($config['onesignal'], $container);
+                break;
+            case 'pushwoosh':
+                $this->configurePushwoosh($config['pushwoosh'], $container);
+                break;
+            default:
+                throw new InvalidConfigurationException(
+                    'The child node "provider" at path "prezent_push" must be one of "onesignal", "pushwoosh".'
+                );
+        }
+        if ($config['logging']['enabled']) {
+            $this->configureLogging($config['logging'], $container, $config['provider']);
+        }
+    }
+
+    /**
+     * Configure the OneSignal manager
+     *
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    private function configureOneSignal(array $config, ContainerBuilder $container)
+    {
+        if (!$config['enabled']) {
             throw new InvalidConfigurationException(
-                'Either the child node "application_id" or the child node "application_group_id" at path "prezent_pushwoosh" must be configured.'
+                'The configuration "onesignal" at path "prezent_push" must be enabled.'
             );
         }
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+        $container->setParameter('prezent_push.onesignal.application_id', $config['application_id']);
+        $container->setParameter('prezent_push.onesignal.application_auth_key', $config['application_auth_key']);
 
-        $container->setParameter('prezent_pushwoosh.api_key', $config['api_key']);
+        $container->setAlias('prezent_push.manager', 'prezent_push.onesignal_manager');
+    }
+
+    private function configurePushwoosh(array $config, ContainerBuilder $container)
+    {
+        if (!$config['enabled']) {
+            throw new InvalidConfigurationException(
+                'The configuration "pushwoosh" at path "prezent_push" must be enabled.'
+            );
+        }
+
+        // check if the application ID, or the application group ID is set
+        if (!isset($config['application_id']) && !isset($config['application_group_id'])) {
+            throw new InvalidConfigurationException(
+                'Either the child node "application_id" or the child node "application_group_id" at path "prezent_push" must be configured.'
+            );
+        }
+
+        $container->setParameter('prezent_push.pushwoosh.api_key', $config['api_key']);
 
         if (isset($config['application_id'])) {
-            $container->setParameter('prezent_pushwoosh.application_id', $config['application_id']);
+            $container->setParameter('prezent_push.pushwoosh.application_id', $config['application_id']);
         }
         if (isset($config['application_group_id'])) {
-            $container->setParameter('prezent_pushwoosh.application_group_id', $config['application_group_id']);
+            $container->setParameter('prezent_push.pushwoosh.application_group_id', $config['application_group_id']);
         }
         if (isset($config['client_class'])) {
-            $container->setParameter('prezent_pushwoosh.pushwoosh_client_class', $config['client_class']);
+            $container->setParameter('prezent_push.pushwoosh.client_class', $config['client_class']);
         }
 
-        if ($config['logging']['enabled']) {
-            $container->setParameter('prezent_pushwoosh.logging', $config['logging']['target']);
+        $container->setAlias('prezent_push.manager', 'prezent_push.pushwoosh_manager');
+    }
 
-            switch ($config['logging']['target']) {
-                case 'file':
-                    // if we are logging to file, add monolog to the manager, and create a specific channel
-                    $definition = $container->getDefinition('prezent_pushwoosh.pushwoosh_manager');
-                    $definition->addMethodCall('setLogger', [new Reference('logger')]);
-                    $definition->addTag('monolog.logger', ['channel' => 'prezent_pushwoosh']);
+    /**
+     * Configure logging
+     *
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    private function configureLogging(array $config, ContainerBuilder $container, $provider)
+    {
+        $container->setParameter('prezent_push.logging', $config['target']);
 
-                    $definition = $container->getDefinition('prezent_pushwoosh.onesignal_manager');
-                    $definition->addMethodCall('setLogger', [new Reference('logger')]);
-                    $definition->addTag('monolog.logger', ['channel' => 'prezent_pushwoosh']);
-                    break;
-                default:
-                    break;
-            }
+        switch ($config['target']) {
+            case 'file':
+                // if we are logging to file, add monolog to the manager, and create a specific channel
+                $definition = $container->getDefinition(sprintf('prezent_push.%s_manager', $provider));
+                $definition->addMethodCall('setLogger', [new Reference('logger')]);
+                $definition->addTag('monolog.logger', ['channel' => 'prezent_push']);
+                break;
+            default:
+                break;
         }
     }
 }

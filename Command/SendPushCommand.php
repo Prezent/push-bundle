@@ -2,7 +2,7 @@
 
 namespace Prezent\PushwooshBundle\Command;
 
-use Prezent\PushwooshBundle\Manager\PushwooshManager;
+use Prezent\PushwooshBundle\Manager\ManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -48,15 +48,15 @@ class SendPushCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var PushwooshManager $pushwooshManager */
-        $pushwooshManager = $this->getContainer()->get('prezent_pushwoosh.pushwoosh_manager');
+        /** @var ManagerInterface $pushManager */
+        $pushManager = $this->getContainer()->get('prezent_push.manager');
 
         $customData = [];
         if ($data = $input->getOption('custom-data')) {
             $customData = $this->formatCustomData($data);
         }
 
-        $success = $pushwooshManager->send($input->getArgument('message'), $customData, $input->getOption('tokens'));
+        $success = $pushManager->send($input->getArgument('message'), $customData, $input->getOption('tokens'));
 
         // Check if its ok
         if ($success) {
@@ -66,8 +66,8 @@ class SendPushCommand extends ContainerAwareCommand
             $output->writeln(
                 sprintf(
                     '<error>[%d] %s</error>',
-                    $pushwooshManager->getErrorCode(),
-                    $pushwooshManager->getErrorMessage()
+                    $pushManager->getErrorCode(),
+                    $pushManager->getErrorMessage()
                 )
             );
         }

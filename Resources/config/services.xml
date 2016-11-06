@@ -5,42 +5,42 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="prezent_pushwoosh.logging">null</parameter>
+        <parameter key="prezent_push.logging">null</parameter>
 
-        <parameter key="prezent_pushwoosh.application_id">null</parameter>
-        <parameter key="prezent_pushwoosh.application_group_id">null</parameter>
-        <parameter key="prezent_pushwoosh.api_key">null</parameter>
-        <parameter key="prezent_pushwoosh.pushwoosh_client_class">Gomoob\Pushwoosh\Client\Pushwoosh</parameter>
+        <parameter key="prezent_push.pushwoosh.application_id">null</parameter>
+        <parameter key="prezent_push.pushwoosh.application_group_id">null</parameter>
+        <parameter key="prezent_push.pushwoosh.api_key">null</parameter>
+        <parameter key="prezent_push.pushwoosh.client_class">Gomoob\Pushwoosh\Client\Pushwoosh</parameter>
 
-        <parameter key="prezent_pushwoosh.onesignal.application_id">null</parameter>
-        <parameter key="prezent_pushwoosh.onesignal.application_auth_key">null</parameter>
+        <parameter key="prezent_push.onesignal.application_id">null</parameter>
+        <parameter key="prezent_push.onesignal.application_auth_key">null</parameter>
     </parameters>
 
      <services>
 
-        <service id="pushwoosh" class="%prezent_pushwoosh.pushwoosh_client_class%">
+        <service id="pushwoosh" class="%prezent_push.pushwoosh.client_class%">
             <call method="setApplication">
-                <argument>%prezent_pushwoosh.application_id%</argument>
+                <argument>%prezent_push.pushwoosh.application_id%</argument>
             </call>
             <call method="setApplicationsGroup">
-                <argument>%prezent_pushwoosh.application_group_id%</argument>
+                <argument>%prezent_push.pushwoosh.application_group_id%</argument>
             </call>
             <call method="setAuth">
-                <argument>%prezent_pushwoosh.api_key%</argument>
+                <argument>%prezent_push.pushwoosh.api_key%</argument>
             </call>
         </service>
 
-        <service id="prezent_pushwoosh.pushwoosh_manager" class="Prezent\PushwooshBundle\Manager\PushwooshManager">
+        <service id="prezent_push.pushwoosh_manager" class="Prezent\PushwooshBundle\Manager\PushwooshManager">
             <argument type="service" id="pushwoosh"/>
-            <argument>%prezent_pushwoosh.logging%</argument>
+            <argument>%prezent_push.logging%</argument>
         </service>
 
          <service id="onesignal_config" class="OneSignal\Config" public="false">
              <call method="setApplicationId">
-                 <argument>%prezent_pushwoosh.onesignal.application_id%</argument>
+                 <argument>%prezent_push.onesignal.application_id%</argument>
              </call>
              <call method="setApplicationAuthKey">
-                 <argument>%prezent_pushwoosh.onesignal.application_auth_key%</argument>
+                 <argument>%prezent_push.onesignal.application_auth_key%</argument>
              </call>
          </service>
 
@@ -59,9 +59,9 @@
              <argument type="service" id="onesignal_guzzle_http_client"/>
          </service>
 
-         <service id="prezent_pushwoosh.onesignal_manager" class="Prezent\PushwooshBundle\Manager\OneSignalManager">
+         <service id="prezent_push.onesignal_manager" class="Prezent\PushwooshBundle\Manager\OneSignalManager">
              <argument type="service" id="onesignal"/>
-             <argument>%prezent_pushwoosh.logging%</argument>
+             <argument>%prezent_push.logging%</argument>
          </service>
 
      </services>

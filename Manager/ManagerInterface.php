@@ -30,4 +30,14 @@ interface ManagerInterface
      * @return bool
      */
     public function sendBatch(array $notifications);
+
+    /**
+     * @return int
+     */
+    public function getErrorCode();
+
+    /**
+     * @return string
+     */
+    public function getErrorMessage();
 }
