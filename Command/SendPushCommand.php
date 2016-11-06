@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Prezent\SherpaTeamBundle\Command\SendPushNotificationCommand
+ * Prezent\PushwooshBundle\Command\SendPushNotificationCommand
  *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */

@@ -10,7 +10,7 @@ use Prezent\PushwooshBundle\Log\LoggingTrait;
 use Psr\Log\LoggerInterface;
 
 /**
- * Prezent\SherpaTeamBundle\PushNotification\Manager
+ * Prezent\PushwooshBundle\PushNotification\Manager
  *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */
@@ -167,7 +167,13 @@ class PushwooshManager implements ManagerInterface
                     throw new LoggingException('No logger is set, cannot write to file');
                 }
 
-                $this->logToFile($this->logger, $notification, $success, $context);
+                $data = [
+                    'receivers' => $notification->getDevices(),
+                    'content' => $notification->getContent(),
+                    'data' => $notification->getData(),
+                ];
+
+                $this->logToFile($this->logger, $data, $success, $context);
                 break;
             default:
                 break;

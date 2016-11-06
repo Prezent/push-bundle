@@ -56,6 +56,10 @@ class PrezentPushwooshExtension extends Extension
                     $definition = $container->getDefinition('prezent_pushwoosh.pushwoosh_manager');
                     $definition->addMethodCall('setLogger', [new Reference('logger')]);
                     $definition->addTag('monolog.logger', ['channel' => 'prezent_pushwoosh']);
+
+                    $definition = $container->getDefinition('prezent_pushwoosh.onesignal_manager');
+                    $definition->addMethodCall('setLogger', [new Reference('logger')]);
+                    $definition->addTag('monolog.logger', ['channel' => 'prezent_pushwoosh']);
                     break;
                 default:
                     break;

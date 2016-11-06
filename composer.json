@@ -7,7 +7,9 @@
   "require": {
     "php": ">=5.5.9",
     "gomoob/php-pushwoosh": "^1.1",
-    "symfony/framework-bundle": "~2.3|~3.0"
+    "symfony/framework-bundle": "~2.3|~3.0",
+    "norkunas/onesignal-php-api": "dev-master",
+    "php-http/guzzle6-adapter": "^1.1"
   },
   "require-dev": {
     "phpunit/phpunit": "@stable"
