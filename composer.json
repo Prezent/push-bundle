@@ -8,14 +8,17 @@
     "php": ">=5.5.9"
   },
   "require-dev": {
+    "gomoob/php-pushwoosh": "^1.1",
+    "norkunas/onesignal-php-api": "^v1.0.0-rc2",
     "phpunit/phpunit": "@stable",
+    "php-http/guzzle6-adapter": "^1.1",
     "symfony/console": "~2.3|~3.0",
     "symfony/framework-bundle": "~2.3|~3.0"
   },
   "suggest": {
     "doctrine/orm": "To use a database to store the push receivers in",
-    "gomoob/php-pushwoosh": "To sent notification through Pushwoosh",
-    "norkunas/onesignal-php-api": "To sent notification through OneSignal"
+    "gomoob/php-pushwoosh": "To sent notifications through Pushwoosh",
+    "norkunas/onesignal-php-api": "To sent notifications through OneSignal"
   },
   "license": "MIT",
   "authors": [
