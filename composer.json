@@ -1,7 +1,7 @@
 {
   "name": "prezent/push-bundle",
   "type": "symfony-bundle",
-  "description": "Symfony bundle the sent push notification through various providers",
+  "description": "Symfony bundle to sent push notifications through various providers",
   "keywords": ["push", "mobile", "bundle", "pushwoosh", "onesignal"],
   "homepage": "http://www.prezent.nl",
   "require": {
