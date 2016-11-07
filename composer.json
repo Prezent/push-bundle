@@ -6,7 +6,7 @@
   "homepage": "http://www.prezent.nl",
   "require": {
     "gomoob/php-pushwoosh": "^1.1",
-    "norkunas/onesignal-php-api": "dev-master",
+    "norkunas/onesignal-php-api": "^v1.0.0-rc2",
     "php": ">=5.5.9",
     "php-http/guzzle6-adapter": "^1.1"
   },
