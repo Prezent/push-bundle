@@ -5,10 +5,7 @@
   "keywords": ["push", "mobile", "bundle", "pushwoosh", "onesignal"],
   "homepage": "http://www.prezent.nl",
   "require": {
-    "gomoob/php-pushwoosh": "^1.1",
-    "norkunas/onesignal-php-api": "^v1.0.0-rc2",
-    "php": ">=5.5.9",
-    "php-http/guzzle6-adapter": "^1.1"
+    "php": ">=5.5.9"
   },
   "require-dev": {
     "phpunit/phpunit": "@stable",
@@ -16,7 +13,9 @@
     "symfony/framework-bundle": "~2.3|~3.0"
   },
   "suggest": {
-    "doctrine/orm": "To use a database to store the push receivers in"
+    "doctrine/orm": "To use a database to store the push receivers in",
+    "gomoob/php-pushwoosh": "To sent notification through Pushwoosh",
+    "norkunas/onesignal-php-api": "To sent notification through OneSignal"
   },
   "license": "MIT",
   "authors": [
