@@ -89,7 +89,7 @@ monolog:
         type: stream
         level: info
         path: %kernel.logs_dir%/push.log
-        channels: [prezent_pushwoosh]
+        channels: [prezent_push]
 ```
 
 At the moment, only logging to file is supported.
