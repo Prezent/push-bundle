@@ -1,8 +1,8 @@
 {
   "name": "prezent/push-bundle",
-  "type": "symfony-bundle",
+  "type": "library",
   "description": "Symfony bundle to sent push notifications through various providers",
-  "keywords": ["push", "mobile", "bundle", "pushwoosh", "onesignal"],
+  "keywords": ["push", "mobile", "symfony", "bundle", "pushwoosh", "onesignal"],
   "homepage": "http://www.prezent.nl",
   "require": {
     "php": ">=5.5.9"
@@ -12,8 +12,8 @@
     "norkunas/onesignal-php-api": "^v1.0.0-rc2",
     "phpunit/phpunit": "@stable",
     "php-http/guzzle6-adapter": "^1.1",
-    "symfony/console": "~2.3|~3.0",
-    "symfony/framework-bundle": "~2.3|~3.0"
+    "symfony/console": "^2.3|^3.0",
+    "symfony/framework-bundle": "^2.3|^3.0"
   },
   "suggest": {
     "doctrine/orm": "To use a database to store the push receivers in",
@@ -32,7 +32,7 @@
     }
   ],
   "autoload": {
-    "psr-4": { "Prezent\\PushBundle\\": "" }
+    "psr-4": { "Prezent\\PushBundle\\": "src/" }
   },
   "extra": {
     "branch-alias": {
