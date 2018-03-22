@@ -3,7 +3,6 @@
 namespace Prezent\PushBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gomoob\Pushwoosh\Model\Notification\Platform;
 
 /**
  * Prezent\PushBundle\Entity\PushReceiver
@@ -29,7 +28,7 @@ class PushReceiver
     protected $pushToken;
 
     /**
-     * @var string
+     * @var int
      * @ORM\Column(name="device_type", type="integer")
      */
     protected $deviceType;
@@ -87,52 +86,22 @@ class PushReceiver
     /**
      * Getter for deviceType
      *
-     * @return Platform
+     * @return int
      */
     public function getDeviceType()
     {
-        switch ($this->deviceType) {
-            case 1:
-                return Platform::iOS();
-                break;
-            case 2:
-                return Platform::blackBerry();
-                break;
-            case 3:
-                return Platform::android();
-                break;
-            case 4:
-                return Platform::nokia();
-                break;
-            case 5:
-                return Platform::windowsPhone7();
-                break;
-            case 7:
-                return Platform::macOSX();
-                break;
-            case 8:
-                return Platform::windows8();
-                break;
-            case 9:
-                return Platform::amazon();
-                break;
-            case 10:
-                return Platform::safari();
-                break;
-        }
-
-        throw new \RuntimeException('Not a valid device type set');
+        return $this->deviceType;
     }
 
     /**
      * Setter for deviceType
      *
-     * @param Platform $deviceType
+     * @param int $deviceType
      * @return self
      */
-    public function setDeviceType(Platform $deviceType)
+    public function setDeviceType($deviceType)
     {
-        $this->deviceType = $deviceType->getValue();
+        $this->deviceType = $deviceType;
         return $this;
     }
 
