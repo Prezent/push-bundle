@@ -26,31 +26,31 @@ class PushReceiver
      * @var string
      * @ORM\Column(name="push_token", type="string")
      */
-    private $pushToken;
+    protected $pushToken;
 
     /**
      * @var string
      * @ORM\Column(name="device_type", type="integer")
      */
-    private $deviceType;
+    protected $deviceType;
 
     /**
      * @var string
      * @ORM\Column(name="identifier", type="string")
      */
-    private $identifier;
+    protected $identifier;
 
     /**
      * @var string
      * @ORM\Column(name="language", type="string", length=2)
      */
-    private $language;
+    protected $language;
 
     /**
      * @var int
      * @ORM\Column(name="timezone", type="integer", nullable=true)
      */
-    private $timezone;
+    protected $timezone;
 
     /**
      * Getter for id
