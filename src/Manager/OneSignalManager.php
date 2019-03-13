@@ -63,9 +63,12 @@ class OneSignalManager implements ManagerInterface
                 'en' => $content,
             ],
             'include_player_ids' => $devices,
-            'data' => $data,
         ];
-        
+
+        if (!empty($data)) {
+            $notificationData['data'] = $data;
+        }
+
         return $this->sendPush($notificationData);
     }
 
@@ -134,8 +137,12 @@ class OneSignalManager implements ManagerInterface
                 $data = [
                     'receivers' => $notificationData['include_player_ids'],
                     'content' => $notificationData['contents'],
-                    'data' => $notificationData['data'],
+                    'data' => [],
                 ];
+
+                if (isset($notificationData['data'])) {
+                    $data['data'] = $notificationData['data'];
+                }
 
                 $this->logToFile($this->logger, $data, $success, $context);
                 break;
@@ -145,7 +152,7 @@ class OneSignalManager implements ManagerInterface
 
         return true;
     }
-    
+
     /**
      * Getter for errorMessage
      *
