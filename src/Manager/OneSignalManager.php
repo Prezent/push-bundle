@@ -62,7 +62,8 @@ class OneSignalManager implements ManagerInterface
             'contents' => [
                 'en' => $content,
             ],
-            'include_player_ids' => $devices,
+            // make sure the devices array has numeric keys, otherwise it serializes in a wrong way (object i/o array)
+            'include_player_ids' => array_values($devices),
         ];
 
         if (!empty($data)) {
