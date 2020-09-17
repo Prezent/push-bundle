@@ -32,6 +32,14 @@ interface ManagerInterface
     public function sendBatch(array $notifications);
 
     /**
+     * Send a push notification with custom data
+     *
+     * @param array $notificationData
+     * @return mixed
+     */
+    public function directSend(array $notificationData);
+
+    /**
      * @return int
      */
     public function getErrorCode();

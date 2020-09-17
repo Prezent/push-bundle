@@ -86,6 +86,14 @@ class OneSignalManager implements ManagerInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function directSend(array $notificationData)
+    {
+        return $this->sendPush($notificationData);
+    }
+
+    /**
      * Send the push message with client
      *
      * @param array $notificationData

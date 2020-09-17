@@ -89,6 +89,14 @@ class PushwooshManager implements ManagerInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function directSend(array $notificationData)
+    {
+        return $this->sendPush($notificationData);
+    }
+    
+    /**
      * Create a notification for the request
      *
      * @param string $content
