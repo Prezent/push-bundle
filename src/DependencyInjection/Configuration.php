@@ -18,8 +18,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('prezent_push');
+        $treeBuilder = new TreeBuilder('prezent_push');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
@@ -30,7 +30,6 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('api_key')->isRequired()->end()
                         ->scalarNode('application_id')->end()
                         ->scalarNode('application_group_id')->end()
-                        ->scalarNode('client_class')->end()
                     ->end()
                 ->end()
                 ->arrayNode('onesignal')

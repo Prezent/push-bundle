@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
         <parameter key="prezent_push.logging">null</parameter>
@@ -16,9 +16,9 @@
         <parameter key="prezent_push.onesignal.application_auth_key">null</parameter>
     </parameters>
 
-     <services>
+    <services>
 
-        <service id="pushwoosh" class="%prezent_push.pushwoosh.client_class%">
+        <service id="Gomoob\Pushwoosh\Client\Pushwoosh" public="true">
             <call method="setApplication">
                 <argument>%prezent_push.pushwoosh.application_id%</argument>
             </call>
@@ -30,40 +30,47 @@
             </call>
         </service>
 
-        <service id="prezent_push.pushwoosh_manager" class="Prezent\PushBundle\Manager\PushwooshManager">
+        <service id="pushwoosh" alias="Gomoob\Pushwoosh\Client\Pushwoosh" />
+
+        <service id="Prezent\PushBundle\Manager\PushwooshManager" public="true">
             <argument type="service" id="pushwoosh"/>
             <argument>%prezent_push.logging%</argument>
         </service>
 
-         <service id="onesignal_config" class="OneSignal\Config" public="false">
-             <call method="setApplicationId">
-                 <argument>%prezent_push.onesignal.application_id%</argument>
-             </call>
-             <call method="setApplicationAuthKey">
-                 <argument>%prezent_push.onesignal.application_auth_key%</argument>
-             </call>
-         </service>
+        <service id="prezent_push.pushwoosh_manager" alias="Prezent\PushBundle\Manager\PushwooshManager" />
 
-         <service id="onesignal_guzzle_client" class="GuzzleHttp\Client" public="false"/>
-         <service id="onesignal_guzzle_adapter" class="Http\Adapter\Guzzle6\Client" public="false">
-             <argument type="service" id="onesignal_guzzle_client"/>
-         </service>
-         <service id="onesignal_guzzle_message_factory" class="Http\Message\MessageFactory\GuzzleMessageFactory" public="false"/>
-         <service id="onesignal_guzzle_http_client" class="Http\Client\Common\HttpMethodsClient" public="false">
-             <argument type="service" id="onesignal_guzzle_adapter"/>
-             <argument type="service" id="onesignal_guzzle_message_factory"/>
-         </service>
+        <service id="onesignal_config" class="OneSignal\Config" public="false">
+            <call method="setApplicationId">
+                <argument>%prezent_push.onesignal.application_id%</argument>
+            </call>
+            <call method="setApplicationAuthKey">
+                <argument>%prezent_push.onesignal.application_auth_key%</argument>
+            </call>
+        </service>
 
-         <service id="onesignal" class="OneSignal\OneSignal">
-             <argument type="service" id="onesignal_config"/>
-             <argument type="service" id="onesignal_guzzle_http_client"/>
-         </service>
+        <service id="onesignal_guzzle_client" class="GuzzleHttp\Client" public="false"/>
+        <service id="onesignal_guzzle_adapter" class="Http\Adapter\Guzzle6\Client" public="false">
+            <argument type="service" id="onesignal_guzzle_client"/>
+        </service>
+        <service id="onesignal_guzzle_message_factory" class="Http\Message\MessageFactory\GuzzleMessageFactory" public="false"/>
+        <service id="onesignal_guzzle_http_client" class="Http\Client\Common\HttpMethodsClient" public="false">
+            <argument type="service" id="onesignal_guzzle_adapter"/>
+            <argument type="service" id="onesignal_guzzle_message_factory"/>
+        </service>
 
-         <service id="prezent_push.onesignal_manager" class="Prezent\PushBundle\Manager\OneSignalManager">
-             <argument type="service" id="onesignal"/>
-             <argument>%prezent_push.logging%</argument>
-         </service>
+        <service id="OneSignal\OneSignal">
+            <argument type="service" id="onesignal_config"/>
+            <argument type="service" id="onesignal_guzzle_http_client"/>
+        </service>
 
-     </services>
+        <service id="onesignal" alias="OneSignal\OneSignal" />
+
+        <service id="Prezent\PushBundle\Manager\OneSignalManager">
+            <argument type="service" id="onesignal"/>
+            <argument>%prezent_push.logging%</argument>
+        </service>
+
+        <service id="prezent_push.onesignal_manager" alias="Prezent\PushBundle\Manager\OneSignalManager" />
+    </services>
 
 </container>

@@ -88,11 +88,8 @@ class PrezentPushExtension extends Extension
         if (isset($config['application_group_id'])) {
             $container->setParameter('prezent_push.pushwoosh.application_group_id', $config['application_group_id']);
         }
-        if (isset($config['client_class'])) {
-            $container->setParameter('prezent_push.pushwoosh.client_class', $config['client_class']);
-        }
 
-        $container->setAlias('prezent_push.manager', 'prezent_push.pushwoosh_manager');
+        $container->setAlias('prezent_push.manager', 'Prezent\PushBundle\Manager\PushwooshManager');
     }
 
     /**
@@ -108,7 +105,7 @@ class PrezentPushExtension extends Extension
         switch ($config['target']) {
             case 'file':
                 // if we are logging to file, add monolog to the manager, and create a specific channel
-                $definition = $container->getDefinition(sprintf('prezent_push.%s_manager', $provider));
+                $definition = $container->getDefinition(sprintf('Prezent\PushBundle\Manager\%sManager', ucfirst($provider)));
                 $definition->addMethodCall('setLogger', [new Reference('logger')]);
                 $definition->addTag('monolog.logger', ['channel' => 'prezent_push']);
                 break;

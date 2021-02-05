@@ -69,7 +69,6 @@ prezent_push:
     application_id: XXXXX-XXXXX
     application_group_id: YYYYY-YYYYY
     api_key: xxxxxxxxxxxxxxxxxxxxx
-    client_class: Gomoob\Pushwoosh\Client\Pushwoosh
   logging: 
     target: file
 ```
