@@ -3,6 +3,7 @@
 namespace Prezent\PushBundle\Command;
 
 use Prezent\PushBundle\Manager\ManagerInterface;
+use Prezent\PushBundle\Traits\DataTrait;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,12 +11,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Prezent\PushBundle\Command\SendPushNotificationCommand
- *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */
 class SendPushCommand extends ContainerAwareCommand
 {
+    use DataTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -73,28 +74,5 @@ class SendPushCommand extends ContainerAwareCommand
         }
 
         return 0;
-    }
-
-    /**
-     * Format the custom data into an associative array
-     *
-     * @param array $data
-     * @return array
-     */
-    private function formatCustomData(array $data)
-    {
-        $customData = [];
-        foreach ($data as $dataItem) {
-            // check for the integrity of the data
-            if (!strstr($dataItem, ':')) {
-                throw new \InvalidArgumentException('Custom data items must be entered in the format `key`:`value`');
-            }
-
-            // and parse the data
-            list($key, $value) = explode(':', $dataItem);
-            $customData[$key] = $value;
-        }
-
-        return $customData;
     }
 }
