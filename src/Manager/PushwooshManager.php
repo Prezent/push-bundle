@@ -58,7 +58,7 @@ class PushwooshManager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function send($content, array $data = [], array $devices = [])
+    public function send($content, array $data = [], array $devices = [], array $parameters = [])
     {
         $notification = $this->createNotification($content, $data, $devices);
 
@@ -95,7 +95,7 @@ class PushwooshManager implements ManagerInterface
     {
         return $this->sendPush($notificationData);
     }
-    
+
     /**
      * Create a notification for the request
      *
@@ -189,7 +189,7 @@ class PushwooshManager implements ManagerInterface
 
         return true;
     }
-    
+
     /**
      * Getter for errorMessage
      *

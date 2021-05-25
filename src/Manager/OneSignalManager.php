@@ -56,7 +56,7 @@ class OneSignalManager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function send($content, array $data = [], array $devices = [])
+    public function send($content, array $data = [], array $devices = [], array $parameters = [])
     {
         $notificationData = [
             'contents' => [
@@ -69,6 +69,8 @@ class OneSignalManager implements ManagerInterface
         if (!empty($data)) {
             $notificationData['data'] = $data;
         }
+
+        $notificationData = array_merge($notificationData, $parameters);
 
         return $this->sendPush($notificationData);
     }
@@ -143,17 +145,7 @@ class OneSignalManager implements ManagerInterface
                     throw new LoggingException('No logger is set, cannot write to file');
                 }
 
-                $data = [
-                    'receivers' => $notificationData['include_player_ids'],
-                    'content' => $notificationData['contents'],
-                    'data' => [],
-                ];
-
-                if (isset($notificationData['data'])) {
-                    $data['data'] = $notificationData['data'];
-                }
-
-                $this->logToFile($this->logger, $data, $success, $context);
+                $this->logToFile($this->logger, $notificationData, $success, $context);
                 break;
             default:
                 break;

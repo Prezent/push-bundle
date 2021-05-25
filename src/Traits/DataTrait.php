@@ -13,7 +13,7 @@ trait DataTrait
      * @param array $data
      * @return array
      */
-    protected function formatCustomData(array $data)
+    protected function formatInputArray(array $data)
     {
         $customData = [];
         foreach ($data as $dataItem) {
@@ -28,5 +28,17 @@ trait DataTrait
         }
 
         return $customData;
+    }
+
+    /**
+     * Stub function for legacy purposes
+     *
+     * @deprecated use `formatInputArray` instead
+     * @param array $data
+     * @return array
+     */
+    protected function formatCustomData(array $data)
+    {
+        return $this->formatInputArray($data);
     }
 }

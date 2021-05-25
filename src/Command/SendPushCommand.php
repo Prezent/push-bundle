@@ -40,6 +40,13 @@ class SendPushCommand extends ContainerAwareCommand
                 'List of push token to send the notification to',
                 []
             )
+            ->addOption(
+                'parameters',
+                'p',
+                InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
+                'List of parameters to include in the notification. Format `key`:`value`',
+                []
+            )
             ->setHelp('Send a push message manually')
         ;
     }
@@ -52,12 +59,12 @@ class SendPushCommand extends ContainerAwareCommand
         /** @var ManagerInterface $pushManager */
         $pushManager = $this->getContainer()->get('prezent_push.manager');
 
-        $customData = [];
-        if ($data = $input->getOption('custom-data')) {
-            $customData = $this->formatCustomData($data);
-        }
-
-        $success = $pushManager->send($input->getArgument('message'), $customData, $input->getOption('tokens'));
+        $success = $pushManager->send(
+            $input->getArgument('message'),
+            $this->formatInputArray($input->getOption('custom-data')),
+            $input->getOption('tokens'),
+            $this->formatInputArray($input->getOption('parameters'))
+        );
 
         // Check if its ok
         if ($success) {
@@ -73,6 +80,6 @@ class SendPushCommand extends ContainerAwareCommand
             );
         }
 
-        return 0;
+        exit(0);
     }
 }
