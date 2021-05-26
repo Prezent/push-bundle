@@ -11,9 +11,10 @@ trait DataTrait
      * Format the custom data into an associative array
      *
      * @param array $data
+     * @param bool $strongTyping
      * @return array
      */
-    protected function formatInputArray(array $data)
+    protected function formatInputArray(array $data, $strongTyping = false)
     {
         $customData = [];
         foreach ($data as $dataItem) {
@@ -24,10 +25,26 @@ trait DataTrait
 
             // and parse the data
             list($key, $value) = explode(':', $dataItem);
-            $customData[$key] = $value;
+            $customData[$key] = $strongTyping ? $this->formatValue($value) : $value;
         }
 
         return $customData;
+    }
+
+    /**
+     * Convert strings to numeric or their other type
+     *
+     * @param $value
+     * @return float|int
+     */
+    private function formatValue($value)
+    {
+        if (is_numeric($value)) {
+            // hacky? way to detect a float
+            return (strpos($value, ".") !== false) ? (float) $value : (int) $value;
+        }
+
+        return $value;
     }
 
     /**

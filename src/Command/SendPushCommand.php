@@ -63,7 +63,7 @@ class SendPushCommand extends ContainerAwareCommand
             $input->getArgument('message'),
             $this->formatInputArray($input->getOption('custom-data')),
             $input->getOption('tokens'),
-            $this->formatInputArray($input->getOption('parameters'))
+            $this->formatInputArray($input->getOption('parameters'), true)
         );
 
         // Check if its ok
