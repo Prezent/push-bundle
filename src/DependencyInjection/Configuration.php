@@ -19,7 +19,12 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('prezent_push');
-        $rootNode = $treeBuilder->root('prezent_push');
+
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            $rootNode = $treeBuilder->root('prezent_push');
+        }
 
         $rootNode
             ->children()
