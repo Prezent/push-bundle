@@ -30,18 +30,15 @@ class PrezentPushExtension extends Extension
 
         switch ($config['provider']) {
             case 'onesignal':
-                $this->configureOneSignal($config['onesignal'], $container);
+                $this->configureOneSignal($config['onesignal'], $container, $config['logging']);
                 break;
             case 'pushwoosh':
-                $this->configurePushwoosh($config['pushwoosh'], $container);
+                $this->configurePushwoosh($config['pushwoosh'], $container, $config['logging']);
                 break;
             default:
                 throw new InvalidConfigurationException(
                     'The child node "provider" at path "prezent_push" must be one of "onesignal", "pushwoosh".'
                 );
-        }
-        if ($config['logging']['enabled']) {
-            $this->configureLogging($config['logging'], $container, $config['provider']);
         }
     }
 
@@ -51,12 +48,16 @@ class PrezentPushExtension extends Extension
      * @param array $config
      * @param ContainerBuilder $container
      */
-    private function configureOneSignal(array $config, ContainerBuilder $container)
+    private function configureOneSignal(array $config, ContainerBuilder $container, array $loggingConfig)
     {
         if (!$config['enabled']) {
             throw new InvalidConfigurationException(
                 'The configuration "onesignal" at path "prezent_push" must be enabled.'
             );
+        }
+
+        if ($loggingConfig['enabled']) {
+            $this->configureLogging($loggingConfig, $container, 'OneSignal');
         }
 
         $container->setParameter('prezent_push.onesignal.application_id', $config['application_id']);
@@ -65,12 +66,16 @@ class PrezentPushExtension extends Extension
         $container->setAlias('prezent_push.manager', 'prezent_push.onesignal_manager');
     }
 
-    private function configurePushwoosh(array $config, ContainerBuilder $container)
+    private function configurePushwoosh(array $config, ContainerBuilder $container, array $loggingConfig)
     {
         if (!$config['enabled']) {
             throw new InvalidConfigurationException(
                 'The configuration "pushwoosh" at path "prezent_push" must be enabled.'
             );
+        }
+
+        if ($loggingConfig['enabled']) {
+            $this->configureLogging($loggingConfig, $container, $config['provider']);
         }
 
         // check if the application ID, or the application group ID is set
