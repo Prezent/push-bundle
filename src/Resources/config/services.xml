@@ -40,12 +40,8 @@
         <service id="prezent_push.pushwoosh_manager" alias="Prezent\PushBundle\Manager\PushwooshManager" />
 
         <service id="onesignal_config" class="OneSignal\Config" public="false">
-            <call method="setApplicationId">
-                <argument>%prezent_push.onesignal.application_id%</argument>
-            </call>
-            <call method="setApplicationAuthKey">
-                <argument>%prezent_push.onesignal.application_auth_key%</argument>
-            </call>
+            <argument>%prezent_push.onesignal.application_id%</argument>
+            <argument>%prezent_push.onesignal.application_auth_key%</argument>
         </service>
 
         <service id="onesignal_guzzle_client" class="GuzzleHttp\Client" public="false"/>
@@ -58,9 +54,13 @@
             <argument type="service" id="onesignal_guzzle_message_factory"/>
         </service>
 
+        <service id="onesignal_guzzle_request_factory" class="Nyholm\Psr7\Factory\Psr17Factory" public="false"/>
+
         <service id="OneSignal\OneSignal">
             <argument type="service" id="onesignal_config"/>
             <argument type="service" id="onesignal_guzzle_http_client"/>
+            <argument type="service" id="onesignal_guzzle_request_factory"/>
+            <argument type="service" id="onesignal_guzzle_request_factory"/>
         </service>
 
         <service id="onesignal" alias="OneSignal\OneSignal" />
