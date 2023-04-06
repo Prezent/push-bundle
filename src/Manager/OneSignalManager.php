@@ -54,14 +54,21 @@ class OneSignalManager implements ManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Send a push notification
+     *
+     * @param array $contents [
+     *     'language-code' => 'content'
+     * ]
+     * @param array $data
+     * @param array $devices
+     * @param array $parameters
+     *
+     * @return bool
      */
-    public function send($content, array $data = [], array $devices = [], array $parameters = [])
+    public function send($contents, array $data = [], array $devices = [], array $parameters = [])
     {
         $notificationData = [
-            'contents' => [
-                'en' => $content,
-            ],
+            'contents' => $contents,
             // make sure the devices array has numeric keys, otherwise it serializes in a wrong way (object i/o array)
             'include_player_ids' => array_values($devices),
         ];
@@ -104,7 +111,7 @@ class OneSignalManager implements ManagerInterface
     private function sendPush(array $notificationData)
     {
         // Call the REST Web Service
-        $response = $this->client->notifications->add($notificationData);
+        $response = $this->client->notifications()->add($notificationData);
 
         // Check if its ok
         if (!isset($response['error'])) {
