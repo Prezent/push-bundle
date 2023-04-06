@@ -87,11 +87,17 @@ class OneSignalManager implements ManagerInterface
      */
     public function sendBatch(array $notifications)
     {
+        $success = true;
+
         foreach ($notifications as $notification) {
-            call_user_func_array(array($this, "send"), $notification);
+            $result = call_user_func_array(array($this, "send"), $notification);
+
+            if (!$result) {
+                $success = false;
+            }
         }
 
-        return true;
+        return $success;
     }
 
     /**
@@ -114,7 +120,7 @@ class OneSignalManager implements ManagerInterface
         $response = $this->client->notifications()->add($notificationData);
 
         // Check if its ok
-        if (!isset($response['error'])) {
+        if (!isset($response['errors'])) {
             if ($this->logging) {
                 $this->log($notificationData, true);
             }
@@ -124,11 +130,11 @@ class OneSignalManager implements ManagerInterface
                 $this->log(
                     $notificationData,
                     false,
-                    ['message' => implode('; ', $response['error']), 'code' => null]
+                    ['message' => implode('; ', $response['errors']), 'code' => null]
                 );
             }
 
-            $this->errorMessage = implode('; ', $response['error']);
+            $this->errorMessage = implode('; ', $response['errors']);
             $this->errorCode = null;
 
             return false;
