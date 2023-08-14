@@ -3,17 +3,17 @@
   "type": "library",
   "description": "Symfony bundle to sent push notifications through various providers",
   "keywords": ["push", "mobile", "symfony", "bundle", "pushwoosh", "onesignal"],
-  "homepage": "http://www.prezent.nl",
+  "homepage": "https://www.prezent.nl",
   "require": {
-    "php": ">=5.5.9"
+    "php": ">=7.4|>=8.0"
   },
   "require-dev": {
     "gomoob/php-pushwoosh": "^1.1",
-    "norkunas/onesignal-php-api": "^1.0.0",
+    "norkunas/onesignal-php-api": "^2.0",
     "phpunit/phpunit": "@stable",
-    "php-http/guzzle6-adapter": "^1.1",
-    "symfony/console": "^2.8|^3.4|^4.4|^5.0",
-    "symfony/framework-bundle": "^2.8|^3.4|^4.4|^5.0"
+    "php-http/guzzle7-adapter": "^1.0",
+    "symfony/console": "^5.4|^6.0",
+    "symfony/framework-bundle": "^5.4|^6.0"
   },
   "suggest": {
     "doctrine/orm": "To use a database to store the push receivers in",
@@ -36,7 +36,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.4.x-dev"
+      "dev-master": "1.x-dev"
     }
   }
 }

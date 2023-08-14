@@ -44,23 +44,13 @@
             <argument>%prezent_push.onesignal.application_auth_key%</argument>
         </service>
 
-        <service id="onesignal_guzzle_client" class="GuzzleHttp\Client" public="false"/>
-        <service id="onesignal_guzzle_adapter" class="Http\Adapter\Guzzle6\Client" public="false">
-            <argument type="service" id="onesignal_guzzle_client"/>
-        </service>
-        <service id="onesignal_guzzle_message_factory" class="Http\Message\MessageFactory\GuzzleMessageFactory" public="false"/>
-        <service id="onesignal_guzzle_http_client" class="Http\Client\Common\HttpMethodsClient" public="false">
-            <argument type="service" id="onesignal_guzzle_adapter"/>
-            <argument type="service" id="onesignal_guzzle_message_factory"/>
-        </service>
-
-        <service id="onesignal_guzzle_request_factory" class="Nyholm\Psr7\Factory\Psr17Factory" public="false"/>
+        <service id="onesignal_guzzle_client" class="GuzzleHttp\Client" />
 
         <service id="OneSignal\OneSignal">
             <argument type="service" id="onesignal_config"/>
-            <argument type="service" id="onesignal_guzzle_http_client"/>
-            <argument type="service" id="onesignal_guzzle_request_factory"/>
-            <argument type="service" id="onesignal_guzzle_request_factory"/>
+            <argument type="service" id="onesignal_guzzle_client"/>
+            <argument type="service" id="http_discovery.psr17_factory"/>
+            <argument type="service" id="http_discovery.psr17_factory"/>
         </service>
 
         <service id="onesignal" alias="OneSignal\OneSignal" />
