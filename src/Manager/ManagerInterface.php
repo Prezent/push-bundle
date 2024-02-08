@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Prezent\PushBundle\Manager;
 
 /**
- * Prezent\PushBundle\Manager\ManagerInterface
- *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */
 interface ManagerInterface
@@ -12,14 +12,14 @@ interface ManagerInterface
     /**
      * Send a push notification
      *
-     * @param string $content
-     * @param array $data
-     * @param array $devices
-     * @param array $parameters
-     *
-     * @return bool
+     * @param array<string, string> $contents [
+     *      'language-code' => 'content'
+     *  ]
+     * @param array<string, mixed> $data
+     * @param array<string> $devices
+     * @param array<string, mixed> $parameters
      */
-    public function send($content, array $data = [], array $devices = [], array $parameters = []);
+    public function send(array $contents, array $data = [], array $devices = [], array $parameters = []): bool;
 
     /**
      * Send a batch of push notifications in one go
@@ -32,7 +32,7 @@ interface ManagerInterface
      * ]
      * @return bool
      */
-    public function sendBatch(array $notifications);
+    public function sendBatch(array $notifications): bool;
 
     /**
      * Send a push notification with custom data
@@ -45,10 +45,10 @@ interface ManagerInterface
     /**
      * @return int
      */
-    public function getErrorCode();
+    public function getErrorCode(): ?int;
 
     /**
      * @return string
      */
-    public function getErrorMessage();
+    public function getErrorMessage(): ?string;
 }

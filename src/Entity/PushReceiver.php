@@ -5,8 +5,6 @@ namespace Prezent\PushBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Prezent\PushBundle\Entity\PushReceiver
- *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
 
  * @ORM\MappedSuperclass
@@ -19,7 +17,7 @@ class PushReceiver
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Prezent\PushBundle\Command;
 
 use Prezent\PushBundle\Manager\ManagerInterface;
 use Prezent\PushBundle\Traits\DataTrait;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -13,9 +15,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */
-class SendPushCommand extends ContainerAwareCommand
+class SendPushCommand extends Command
 {
     use DataTrait;
+
+    private ManagerInterface $pushManager;
+
+    public function __construct(ManagerInterface $pushManager)
+    {
+        $this->pushManager = $pushManager;
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -47,26 +57,22 @@ class SendPushCommand extends ContainerAwareCommand
                 'List of parameters to include in the notification. Format `key`:`value`',
                 []
             )
-            ->setHelp('Send a push message manually')
-        ;
+            ->setHelp('Send a push message manually');
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var ManagerInterface $pushManager */
-        $pushManager = $this->getContainer()->get('prezent_push.manager');
-
-        $success = $pushManager->send(
+        $success = $this->pushManager->send(
             $input->getArgument('message'),
             $this->formatInputArray($input->getOption('custom-data')),
             $input->getOption('tokens'),
             $this->formatInputArray($input->getOption('parameters'), true)
         );
 
-        // Check if its ok
+        // Check if it's ok
         if ($success) {
             $output->writeln('<info>Push message send successful</info>');
         } else {
@@ -74,12 +80,12 @@ class SendPushCommand extends ContainerAwareCommand
             $output->writeln(
                 sprintf(
                     '<error>[%d] %s</error>',
-                    $pushManager->getErrorCode(),
-                    $pushManager->getErrorMessage()
+                    $this->pushManager->getErrorCode(),
+                    $this->pushManager->getErrorMessage()
                 )
             );
         }
 
-        exit(0);
+        return Command::SUCCESS;
     }
 }

@@ -1,0 +1,6 @@
+parameters:
+    tmpDir: %currentWorkingDirectory%/var/cache/phpstan
+    level: 5
+    paths:
+        - %currentWorkingDirectory%/src
+    checkGenericClassInNonGenericObjectType: false

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Prezent\PushBundle\Manager;
 
 use Gomoob\Pushwoosh\IPushwoosh;
@@ -10,46 +12,26 @@ use Prezent\PushBundle\Log\LoggingTrait;
 use Psr\Log\LoggerInterface;
 
 /**
- * Prezent\PushBundle\PushNotification\Manager
- *
  * @author Robert-Jan Bijl <robert-jan@prezent.nl>
  */
 class PushwooshManager implements ManagerInterface
 {
     use LoggingTrait;
 
-    /**
-     * @var IPushwoosh
-     */
-    private $client;
+    private IPushwoosh $client;
 
-    /**
-     * @var string
-     */
-    private $errorMessage;
+    private ?string $errorMessage = null;
 
-    /**
-     * @var int
-     */
-    private $errorCode;
+    private ?int $errorCode = null;
 
     /**
      * @var LoggerInterface
      */
     private $logger;
 
-    /**
-     * @var string
-     */
-    private $logging = null;
+    private bool $logging;
 
-    /**
-     * Constructor
-     *
-     * @param IPushwoosh $client
-     * @param string $logging
-     */
-    public function __construct(IPushwoosh $client, $logging = null)
+    public function __construct(IPushwoosh $client, bool $logging = false)
     {
         $this->client = $client;
         $this->logging = $logging;
@@ -58,9 +40,9 @@ class PushwooshManager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function send($content, array $data = [], array $devices = [], array $parameters = [])
+    public function send(array $contents, array $data = [], array $devices = [], array $parameters = []): bool
     {
-        $notification = $this->createNotification($content, $data, $devices);
+        $notification = $this->createNotification($contents, $data, $devices);
 
         $request = new CreateMessageRequest();
         $request->addNotification($notification);
@@ -71,13 +53,13 @@ class PushwooshManager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function sendBatch(array $notifications)
+    public function sendBatch(array $notifications): bool
     {
         $request = new CreateMessageRequest();
         foreach ($notifications as $notificationArray) {
-            $content = isset($notificationArray['content']) ? $notificationArray['content'] : '';
-            $data = isset($notificationArray['data']) ? $notificationArray['data'] : [];
-            $devices = isset($notificationArray['devices']) ? $notificationArray['devices'] : [];
+            $content = $notificationArray['content'] ?? '';
+            $data = $notificationArray['data'] ?? [];
+            $devices = $notificationArray['devices'] ?? [];
 
             if ($content) {
                 $notification = $this->createNotification($content, $data, $devices);
@@ -93,18 +75,22 @@ class PushwooshManager implements ManagerInterface
      */
     public function directSend(array $notificationData)
     {
-        return $this->sendPush($notificationData);
+        $notification = $this->createNotification(...$notificationData);
+
+        $request = new CreateMessageRequest();
+        $request->addNotification($notification);
+
+        return $this->sendPush($request);
     }
 
     /**
      * Create a notification for the request
      *
-     * @param string $content
+     * @param array<string, string> $content
      * @param array $data
      * @param array $devices
-     * @return Notification
      */
-    private function createNotification($content, array $data = [], array $devices = [])
+    private function createNotification(array $content, array $data = [], array $devices = []): Notification
     {
         $notification = new Notification();
         $notification->setContent($content);
@@ -126,7 +112,7 @@ class PushwooshManager implements ManagerInterface
      * @param CreateMessageRequest $request
      * @return boolean
      */
-    private function sendPush(CreateMessageRequest $request)
+    private function sendPush(CreateMessageRequest $request): bool
     {
         // Call the REST Web Service
         $response = $this->client->createMessage($request);
@@ -139,6 +125,7 @@ class PushwooshManager implements ManagerInterface
                     $this->log($notification, true);
                 }
             }
+
             return true;
         } else {
             if ($this->logging) {
@@ -167,7 +154,7 @@ class PushwooshManager implements ManagerInterface
      * @return bool
      * @throws LoggingException
      */
-    protected function log(Notification $notification, $success = true, array $context = [])
+    protected function log(Notification $notification, bool $success = true, array $context = [])
     {
         switch ($this->logging) {
             case 'file':
@@ -190,45 +177,25 @@ class PushwooshManager implements ManagerInterface
         return true;
     }
 
-    /**
-     * Getter for errorMessage
-     *
-     * @return string
-     */
-    public function getErrorMessage()
+    public function getErrorMessage(): ?string
     {
         return $this->errorMessage;
     }
 
-    /**
-     * Getter for errorCode
-     *
-     * @return int
-     */
-    public function getErrorCode()
+    public function getErrorCode(): ?int
     {
         return $this->errorCode;
     }
 
-    /**
-     * Getter for logger
-     *
-     * @return LoggerInterface
-     */
-    public function getLogger()
+    public function getLogger(): ?LoggerInterface
     {
         return $this->logger;
     }
 
-    /**
-     * Setter for logger
-     *
-     * @param LoggerInterface $logger
-     * @return self
-     */
-    public function setLogger($logger)
+    public function setLogger(LoggerInterface $logger): self
     {
         $this->logger = $logger;
+
         return $this;
     }
 }

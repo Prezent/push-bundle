@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Prezent\PushBundle\Traits;
 
 /**
@@ -10,11 +12,10 @@ trait DataTrait
     /**
      * Format the custom data into an associative array
      *
-     * @param array $data
-     * @param bool $strongTyping
-     * @return array
+     * @param array<string> $data
+     * @return array<string, mixed>
      */
-    protected function formatInputArray(array $data, $strongTyping = false)
+    protected function formatInputArray(array $data, bool $strongTyping = false): array
     {
         $customData = [];
         foreach ($data as $dataItem) {
@@ -34,28 +35,15 @@ trait DataTrait
     /**
      * Convert strings to numeric or their other type
      *
-     * @param $value
-     * @return float|int
+     * @param mixed $value
      */
-    private function formatValue($value)
+    private function formatValue($value): float
     {
-        if (is_numeric($value)) {
+        if (!is_numeric($value)) {
             // hacky? way to detect a float
-            return (strpos($value, ".") !== false) ? (float) $value : (int) $value;
+            return (float) $value;
         }
 
         return $value;
-    }
-
-    /**
-     * Stub function for legacy purposes
-     *
-     * @deprecated use `formatInputArray` instead
-     * @param array $data
-     * @return array
-     */
-    protected function formatCustomData(array $data)
-    {
-        return $this->formatInputArray($data);
     }
 }
