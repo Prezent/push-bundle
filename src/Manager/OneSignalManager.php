@@ -37,9 +37,7 @@ class OneSignalManager implements ManagerInterface
         $notificationData = [
             'contents' => $contents,
             // make sure the devices array has numeric keys, otherwise it serializes in a wrong way (object i/o array)
-            'include_aliases' => [
-                'onesignal_id' => array_values($devices),
-            ],
+            'include_player_ids' => array_values($devices),
             'target_channel' => 'push',
         ];
 
