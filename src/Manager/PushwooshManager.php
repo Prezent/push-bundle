@@ -42,7 +42,25 @@ class PushwooshManager implements ManagerInterface
      */
     public function send(array $contents, array $data = [], array $devices = [], array $parameters = []): bool
     {
-        $notification = $this->createNotification($contents, $data, $devices);
+        $notification = $this->createNotification($contents, [], $data, $devices);
+
+        $request = new CreateMessageRequest();
+        $request->addNotification($notification);
+
+        return $this->sendPush($request);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sendWithTitle(
+        array $titles,
+        array $contents,
+        array $data = [],
+        array $devices = [],
+        array $parameters = []
+    ): bool {
+        $notification = $this->createNotification($contents, $titles, $data, $devices);
 
         $request = new CreateMessageRequest();
         $request->addNotification($notification);
@@ -90,9 +108,14 @@ class PushwooshManager implements ManagerInterface
      * @param array $data
      * @param array $devices
      */
-    private function createNotification(array $content, array $data = [], array $devices = []): Notification
-    {
+    private function createNotification(
+        array $content,
+        array $title = [],
+        array $data = [],
+        array $devices = []
+    ): Notification {
         $notification = new Notification();
+        $notification->setTitle($title);
         $notification->setContent($content);
 
         if (!empty($data)) {

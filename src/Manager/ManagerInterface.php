@@ -22,6 +22,27 @@ interface ManagerInterface
     public function send(array $contents, array $data = [], array $devices = [], array $parameters = []): bool;
 
     /**
+     * Send a push notification, with a specific title
+     *
+     * @param array<string, string> $titles [
+     *      'language-code' => 'title'
+     *  ]
+     * @param array<string, string> $contents [
+     *      'language-code' => 'content'
+     *  ]
+     * @param array<string, mixed> $data
+     * @param array<string> $devices
+     * @param array<string, mixed> $parameters
+     */
+    public function sendWithTitle(
+        array $titles,
+        array $contents,
+        array $data = [],
+        array $devices = [],
+        array $parameters = []
+    ): bool;
+
+    /**
      * Send a batch of push notifications in one go
      *
      * @param array $notifications [
