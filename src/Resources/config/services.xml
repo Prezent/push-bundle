@@ -44,7 +44,7 @@
             <argument>%prezent_push.onesignal.application_auth_key%</argument>
         </service>
 
-        <service id="onesignal_guzzle_client" class="GuzzleHttp\Client" />
+        <service id="onesignal_guzzle_client" class="Symfony\Component\HttpClient\Psr18Client" />
 
         <service id="OneSignal\OneSignal">
             <argument type="service" id="onesignal_config"/>

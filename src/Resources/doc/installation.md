@@ -2,44 +2,42 @@
 This bundle can be installed using Composer. Tell composer to install the extension:
 
 ```bash
-$ php composer.phar require prezent/push-bundle
+$ composer require prezent/push-bundle
 ```
 
-Then, activate the bundle in your kernel:
+Then, activate the bundle
 
 ```php
 <?php
-// app/AppKernel.php
+// config/bundles.php
 
-public function registerBundles()
-{
-    $bundles = array(
-        // ...
-        new Prezent\PushBundle\PushBundle(),
-    );
-}
+return [
+    // ...
+    Prezent\PushBundle\PushBundle::class => ['all' => true],
+];
+
 ```
 
 ## Select a provider
-Currently, this bundle supports two providers. You need to install the client code youself, to get it to work:
+Currently, this bundle supports two providers. You need to install the client library yourself, to get it to work:
 
 ### OneSignal
-For the OneSignal integration, this bundle uses the [norkunas/onesignal-php-api](https://github.com/norkunas/onesignal-php-api). To use it, you first need to install a `php-http` client. For example the Guzzle6 adapter:
+For the OneSignal integration, this bundle uses the [norkunas/onesignal-php-api](https://github.com/norkunas/onesignal-php-api). To use it, you first need to install the `symfony/http-client` package:
 ```bash
-$  php composer.phar require php-http/guzzle6-adapter
+$  composer require symfony/http-client
 ```
 
 After this, you can install the OneSignal API client:
 
 ```bash
-$ php composer.phar require norkunas/onesignal-php-api
+$ composer require norkunas/onesignal-php-api
 ```
 
 ### Pushwoosh
 All that is needed for Pushwoosh integration, is the [gomoob/php-pushwoosh](https://github.com/gomoob/php-pushwoosh) library:
 
 ```bash
-$ php composer.phar require gomoob/php-pushwoosh
+$ composer require gomoob/php-pushwoosh
 ```
 
 ## Configuration
