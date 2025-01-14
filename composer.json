@@ -12,9 +12,9 @@
     "norkunas/onesignal-php-api": "^2.0",
     "phpstan/phpstan": "^1.10",
     "phpunit/phpunit": "@stable",
-    "symfony/http-client": "^5.4|^6.4|^7.0",
     "symfony/console": "^5.4|^6.4|^7.0",
-    "symfony/framework-bundle": "^5.4|^6.4|^7.0"
+    "symfony/framework-bundle": "^5.4|^6.4|^7.0",
+    "symfony/http-client": "^5.4|^6.4|^7.0"
   },
   "suggest": {
     "doctrine/orm": "To use a database to store the push receivers in",

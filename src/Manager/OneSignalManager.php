@@ -111,7 +111,7 @@ class OneSignalManager implements ManagerInterface
         // Call the REST Web Service
         $response = $this->client->notifications()->add($notificationData);
 
-        // Check if its ok
+        // Check if it's ok
         if (!isset($response['errors'])) {
             if ($this->logging) {
                 $this->log($notificationData, true);
@@ -119,15 +119,24 @@ class OneSignalManager implements ManagerInterface
 
             return true;
         } else {
+            $errors = [];
+            foreach ($response['errors'] as $type => $error) {
+                if (is_array($error)) {
+                    $error = implode('; ', $error);
+                }
+
+                $errors[] = sprintf('%s: %s', $type, $error);
+            }
+
             if ($this->logging) {
                 $this->log(
                     $notificationData,
                     false,
-                    ['message' => implode('; ', $response['errors']), 'code' => null]
+                    ['message' => implode('; ', $errors), 'code' => null]
                 );
             }
 
-            $this->errorMessage = implode('; ', $response['errors']);
+            $this->errorMessage = implode('; ', $errors);
             $this->errorCode = null;
 
             return false;
