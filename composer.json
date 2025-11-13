@@ -5,7 +5,7 @@
   "keywords": ["push", "mobile", "symfony", "bundle", "pushwoosh", "onesignal"],
   "homepage": "https://www.prezent.nl",
   "require": {
-    "php": ">=7.4|>=8.0"
+    "php": ">=8.0"
   },
   "require-dev": {
     "gomoob/php-pushwoosh": "^1.1",
@@ -40,7 +40,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.x-dev"
+      "dev-master": "2.x-dev"
     }
   }
 }

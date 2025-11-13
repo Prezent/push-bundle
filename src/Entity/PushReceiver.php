@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
  * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 class PushReceiver
 {
     /**
@@ -17,36 +18,44 @@ class PushReceiver
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: "id", type: "integer")]
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(name="push_token", type="string")
      */
+    #[ORM\Column(name: "push_token", type: "string")]
     protected $pushToken;
 
     /**
      * @var int
      * @ORM\Column(name="device_type", type="integer")
      */
+    #[ORM\Column(name: "device_type", type: "integer")]
     protected $deviceType;
 
     /**
      * @var string
      * @ORM\Column(name="identifier", type="string")
      */
+    #[ORM\Column(name: "identifier", type: "string")]
     protected $identifier;
 
     /**
      * @var string
      * @ORM\Column(name="language", type="string", length=2)
      */
+    #[ORM\Column(name: "language", type: "string", length: 2)]
     protected $language;
 
     /**
      * @var int
      * @ORM\Column(name="timezone", type="integer", nullable=true)
      */
+    #[ORM\Column(name: "timezone", type: "integer", nullable: true)]
     protected $timezone;
 
     /**
