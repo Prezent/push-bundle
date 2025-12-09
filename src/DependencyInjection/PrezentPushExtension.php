@@ -5,8 +5,8 @@ namespace Prezent\PushBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
@@ -20,19 +20,23 @@ class PrezentPushExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        // Load shared parameters / core configuration
         $loader->load('services.xml');
 
+        // Load provider-specific services based on configuration
         switch ($config['provider']) {
             case 'onesignal':
+                $loader->load('services_onesignal.xml');
                 $this->configureOneSignal($config['onesignal'], $container, $config['logging']);
                 break;
             case 'pushwoosh':
+                $loader->load('services_pushwoosh.xml');
                 $this->configurePushwoosh($config['pushwoosh'], $container, $config['logging']);
                 break;
             default:
@@ -48,7 +52,7 @@ class PrezentPushExtension extends Extension
      * @param array $config
      * @param ContainerBuilder $container
      */
-    private function configureOneSignal(array $config, ContainerBuilder $container, array $loggingConfig)
+    private function configureOneSignal(array $config, ContainerBuilder $container, array $loggingConfig): void
     {
         if (!$config['enabled']) {
             throw new InvalidConfigurationException(
@@ -66,11 +70,17 @@ class PrezentPushExtension extends Extension
         $container->setAlias('prezent_push.manager', 'prezent_push.onesignal_manager');
     }
 
-    private function configurePushwoosh(array $config, ContainerBuilder $container, array $loggingConfig)
+    private function configurePushwoosh(array $config, ContainerBuilder $container, array $loggingConfig): void
     {
         if (!$config['enabled']) {
             throw new InvalidConfigurationException(
                 'The configuration "pushwoosh" at path "prezent_push" must be enabled.'
+            );
+        }
+
+        if (!class_exists(\Gomoob\Pushwoosh\Client\Pushwoosh::class)) {
+            throw new InvalidConfigurationException(
+                'You configured "pushwoosh" as provider, but package "gomoob/php-pushwoosh" (class "Gomoob\\Pushwoosh\\Client\\Pushwoosh") is not installed.'
             );
         }
 
@@ -103,7 +113,7 @@ class PrezentPushExtension extends Extension
      * @param array $config
      * @param ContainerBuilder $container
      */
-    private function configureLogging(array $config, ContainerBuilder $container, $provider)
+    private function configureLogging(array $config, ContainerBuilder $container, $provider): void
     {
         $container->setParameter('prezent_push.logging', $config['target']);
 

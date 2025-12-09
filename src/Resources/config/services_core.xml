@@ -9,8 +9,7 @@
     </parameters>
 
     <services>
-        <!-- This file is kept for backwards compatibility but now only contains shared parameters.
-             Provider-specific services are defined in services_pushwoosh.xml and services_onesignal.xml. -->
+        <!-- Core / shared services could be defined here if needed in the future -->
     </services>
 
 </container>

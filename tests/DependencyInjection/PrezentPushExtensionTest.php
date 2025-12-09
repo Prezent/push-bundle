@@ -2,10 +2,11 @@
 
 namespace Prezent\PushBundle\Tests\DependencyInjection;
 
+use PHPUnit\Framework\TestCase;
 use Prezent\PushBundle\DependencyInjection\PrezentPushExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class PrezentPushExtensionTest extends \PHPUnit_Framework_TestCase
+class PrezentPushExtensionTest extends TestCase
 {
     /**
      * @var PrezentPushExtension
@@ -20,7 +21,7 @@ class PrezentPushExtensionTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritDoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->extension = new PrezentPushExtension();
         $this->container = new ContainerBuilder();
@@ -29,7 +30,7 @@ class PrezentPushExtensionTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritDoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->extension = null;
         $this->container = null;

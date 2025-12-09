@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="prezent_push.onesignal.application_id">null</parameter>
+        <parameter key="prezent_push.onesignal.application_auth_key">null</parameter>
+    </parameters>
+
+    <services>
+        <service id="onesignal_config" class="OneSignal\Config" public="false">
+            <argument>%prezent_push.onesignal.application_id%</argument>
+            <argument>%prezent_push.onesignal.application_auth_key%</argument>
+        </service>
+
+        <service id="onesignal_guzzle_client" class="Symfony\Component\HttpClient\Psr18Client" />
+
+        <service id="OneSignal\OneSignal">
+            <argument type="service" id="onesignal_config"/>
+            <argument type="service" id="onesignal_guzzle_client"/>
+            <argument type="service" id="http_discovery.psr17_factory"/>
+            <argument type="service" id="http_discovery.psr17_factory"/>
+        </service>
+
+        <service id="onesignal" alias="OneSignal\OneSignal" />
+
+        <service id="Prezent\PushBundle\Manager\OneSignalManager">
+            <argument type="service" id="onesignal"/>
+            <argument>%prezent_push.logging%</argument>
+        </service>
+
+        <service id="prezent_push.onesignal_manager" alias="Prezent\PushBundle\Manager\OneSignalManager" />
+    </services>
+
+</container>

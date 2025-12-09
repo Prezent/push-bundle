@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="prezent_push.pushwoosh.application_id">null</parameter>
+        <parameter key="prezent_push.pushwoosh.application_group_id">null</parameter>
+        <parameter key="prezent_push.pushwoosh.api_key">null</parameter>
+    </parameters>
+
+    <services>
+        <service id="Gomoob\Pushwoosh\Client\Pushwoosh" public="true">
+            <call method="setApplication">
+                <argument>%prezent_push.pushwoosh.application_id%</argument>
+            </call>
+            <call method="setApplicationsGroup">
+                <argument>%prezent_push.pushwoosh.application_group_id%</argument>
+            </call>
+            <call method="setAuth">
+                <argument>%prezent_push.pushwoosh.api_key%</argument>
+            </call>
+        </service>
+
+        <service id="pushwoosh" alias="Gomoob\Pushwoosh\Client\Pushwoosh" />
+
+        <service id="Prezent\PushBundle\Manager\PushwooshManager" public="true">
+            <argument type="service" id="pushwoosh"/>
+            <argument>%prezent_push.logging%</argument>
+        </service>
+
+        <service id="prezent_push.pushwoosh_manager" alias="Prezent\PushBundle\Manager\PushwooshManager" />
+    </services>
+
+</container>

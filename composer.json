@@ -10,8 +10,9 @@
   "require-dev": {
     "gomoob/php-pushwoosh": "^1.1",
     "norkunas/onesignal-php-api": "^2.0",
+    "http-interop/http-factory-guzzle": "*",
     "phpstan/phpstan": "^1.10",
-    "phpunit/phpunit": "@stable",
+    "phpunit/phpunit": "^12.5",
     "symfony/console": "^5.4|^6.4|^7.0",
     "symfony/framework-bundle": "^5.4|^6.4|^7.0",
     "symfony/http-client": "^5.4|^6.4|^7.0"
