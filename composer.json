@@ -9,11 +9,14 @@
   },
   "require-dev": {
     "gomoob/php-pushwoosh": "^1.1",
-    "norkunas/onesignal-php-api": "^2.0",
     "http-interop/http-factory-guzzle": "*",
+    "norkunas/onesignal-php-api": "^2.0",
+    "php-http/discovery": "^1.20",
     "phpstan/phpstan": "^1.10",
     "phpunit/phpunit": "^12.5",
+    "psr/http-factory-implementation": "*",
     "symfony/console": "^5.4|^6.4|^7.0",
+    "symfony/dependency-injection": "^5.4|^6.4|^7.0",
     "symfony/framework-bundle": "^5.4|^6.4|^7.0",
     "symfony/http-client": "^5.4|^6.4|^7.0"
   },
@@ -37,7 +40,10 @@
     "psr-4": { "Prezent\\PushBundle\\": "src/" }
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
   },
   "extra": {
     "branch-alias": {

@@ -10,6 +10,9 @@
     </parameters>
 
     <services>
+        <!-- PSR-17 factory used by the OneSignal client -->
+        <service id="http_discovery.psr17_factory" class="Http\Discovery\Psr17Factory" />
+
         <service id="onesignal_config" class="OneSignal\Config" public="false">
             <argument>%prezent_push.onesignal.application_id%</argument>
             <argument>%prezent_push.onesignal.application_auth_key%</argument>
@@ -17,7 +20,7 @@
 
         <service id="onesignal_guzzle_client" class="Symfony\Component\HttpClient\Psr18Client" />
 
-        <service id="OneSignal\OneSignal">
+        <service id="OneSignal\OneSignal" class="OneSignal\OneSignal">
             <argument type="service" id="onesignal_config"/>
             <argument type="service" id="onesignal_guzzle_client"/>
             <argument type="service" id="http_discovery.psr17_factory"/>

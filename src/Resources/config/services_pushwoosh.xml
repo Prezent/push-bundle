@@ -11,7 +11,7 @@
     </parameters>
 
     <services>
-        <service id="Gomoob\Pushwoosh\Client\Pushwoosh" public="true">
+        <service id="Gomoob\Pushwoosh\Client\Pushwoosh" class="Gomoob\Pushwoosh\Client\Pushwoosh" public="true">
             <call method="setApplication">
                 <argument>%prezent_push.pushwoosh.application_id%</argument>
             </call>

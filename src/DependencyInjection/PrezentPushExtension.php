@@ -2,6 +2,7 @@
 
 namespace Prezent\PushBundle\DependencyInjection;
 
+use Gomoob\Pushwoosh\Client\Pushwoosh;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -78,14 +79,14 @@ class PrezentPushExtension extends Extension
             );
         }
 
-        if (!class_exists(\Gomoob\Pushwoosh\Client\Pushwoosh::class)) {
+        if (!class_exists(Pushwoosh::class)) {
             throw new InvalidConfigurationException(
                 'You configured "pushwoosh" as provider, but package "gomoob/php-pushwoosh" (class "Gomoob\\Pushwoosh\\Client\\Pushwoosh") is not installed.'
             );
         }
 
         if ($loggingConfig['enabled']) {
-            $this->configureLogging($loggingConfig, $container, $config['provider']);
+            $this->configureLogging($loggingConfig, $container, 'Pushwoosh');
         }
 
         // check if the application ID, or the application group ID is set

@@ -58,8 +58,9 @@ class PrezentPushExtensionTest extends TestCase
         $this->assertEquals($applicationId, $this->container->getParameter('prezent_push.onesignal.application_id'));
         $this->assertEquals($applicationAuthKey, $this->container->getParameter('prezent_push.onesignal.application_auth_key'));
 
-        $client = $this->container->get('onesignal');
-        $this->assertEquals($clientClass, get_class($client));
+        // Verify that the container defines the correct OneSignal client class
+        $definition = $this->container->getDefinition('OneSignal\\OneSignal');
+        $this->assertEquals($clientClass, $definition->getClass());
     }
 
     public function testPushwooshConfigValuesAreSetCorrectly()
@@ -67,7 +68,7 @@ class PrezentPushExtensionTest extends TestCase
         $applicationId = 'XXX-XXX';
         $applicationGroupId = 'YYY-YYYY';
         $apiKey = 'xxxxxxxxxxxxxx';
-        $clientClass = 'Gomoob\Pushwoosh\Client\PushwooshMock';
+        $clientClass = 'Gomoob\Pushwoosh\Client\Pushwoosh';
 
         $this->extension->load(
             [
@@ -77,7 +78,6 @@ class PrezentPushExtensionTest extends TestCase
                         'application_id' => $applicationId,
                         'application_group_id' => $applicationGroupId,
                         'api_key' => $apiKey,
-                        'client_class' => 'Gomoob\Pushwoosh\Client\PushwooshMock',
                     ],
                 ]
             ],
@@ -88,7 +88,8 @@ class PrezentPushExtensionTest extends TestCase
         $this->assertEquals($applicationGroupId, $this->container->getParameter('prezent_push.pushwoosh.application_group_id'));
         $this->assertEquals($apiKey, $this->container->getParameter('prezent_push.pushwoosh.api_key'));
 
-        $client = $this->container->get('pushwoosh');
-        $this->assertEquals($clientClass, get_class($client));
+        // Verify that the container defines the correct Pushwoosh client class
+        $definition = $this->container->getDefinition('Gomoob\\Pushwoosh\\Client\\Pushwoosh');
+        $this->assertEquals($clientClass, $definition->getClass());
     }
 }
